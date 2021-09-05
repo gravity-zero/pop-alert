@@ -1,5 +1,21 @@
 class PopUp {
-	constructor() {}
+	toto= "toto";
+	
+	constructor(toto) {
+		console.log(toto);
+		this.div_id_master = "pop_master_div";
+		this.div_id_pop = "pop_container";
+		this.pop_valid_button = "pop_valid_button";
+		this.pop_deny_button = "pop_deny_button";
+		this.pop_default_button = "pop_default_button";
+		this.icone_classname = "pop_icone";
+		this.title_classname = "pop_title";
+		this.default_icone = "../assets/imgs/";
+	}
+
+	getEId(ID){
+		document.getElementById(ID);
+	}
 
 	node_fragment() {
 		return document.createDocumentFragment();
@@ -13,15 +29,17 @@ class PopUp {
 
 	title(param) {
 		let title = document.createElement("h1");
-		title.className = "pop_title";
+		title.className = this.title_classname;
 		title.textContent = param;
 		return title;
 	}
 
-	icone(img_link = false) {
+	icone(img_link = false, img_width = false, img_height = false, alt=false) {
 		let img = document.createElement("img");
-		img.className = "pop_icone";
-		img.href = img_link ? img_link : "../assets/imgs/";
+		img.className = this.icone_classname;
+		img.src = img_link ? img_link : this.default_icone;
+		img.style.width = img_width ? img_width + "px" : '50px';
+		img.style.height = img_height ? img_height + "px" : '50px';
 		return img;
 	}
 
@@ -44,9 +62,17 @@ class PopUp {
 		return denyButton;
 	}
 
-	validationButton() {
+	confirmButton() {
 		return (document.createElement("button").className =
 			"pop_validation_button");
+	}
+
+	questButton() {
+
+	}
+
+	image_height(){
+		//getEId(ID)
 	}
 
 	defaultButton() {
@@ -79,8 +105,9 @@ class PopUp {
 	async params(params, text=false, icone=false, defaultButton=false) {
 		try {
 			let fragment = this.node_fragment();
-			const master_div = this.div("pop_master_div");
-			const pop_div = this.div("pop_container");
+			console.log(this.div_id_master)
+			const master_div = this.div(this.div_id_master);
+			const pop_div = this.div(this.div_id_pop);
 			master_div.appendChild(pop_div);
 
 			if (params) {
@@ -100,9 +127,10 @@ class PopUp {
 			}
 			pop_div.appendChild(this.defaultButton(params.defaultButton));
 			this.createPop(fragment, master_div);
-		
+			pop_div.style.animation = zoomInDown;
 			await this.wait(300);
 			await this.clickEvent(master_div, pop_div);
+
 			return;
 		} catch (err) {
 			console.log("Error: " + err);
