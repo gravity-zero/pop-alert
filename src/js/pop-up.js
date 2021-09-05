@@ -1,8 +1,6 @@
 class PopUp {
-	toto= "toto";
 	
-	constructor(toto) {
-		console.log(toto);
+	constructor() {
 		this.div_id_master = "pop_master_div";
 		this.div_id_pop = "pop_container";
 		this.pop_valid_button = "pop_valid_button";
@@ -14,16 +12,17 @@ class PopUp {
 	}
 
 	getEId(ID){
-		document.getElementById(ID);
+		return document.getElementById(ID);
 	}
 
 	node_fragment() {
 		return document.createDocumentFragment();
 	}
 
-	div(name=null) {
+	div(name=null, className=null) {
 		let div = document.createElement("div");
 		div.id = name;
+		div.className = className? className : "";
 		return div;
 	}
 
@@ -107,7 +106,7 @@ class PopUp {
 			let fragment = this.node_fragment();
 			console.log(this.div_id_master)
 			const master_div = this.div(this.div_id_master);
-			const pop_div = this.div(this.div_id_pop);
+			const pop_div = this.div(this.div_id_pop, this.div_id_pop);
 			master_div.appendChild(pop_div);
 
 			if (params) {
@@ -127,7 +126,8 @@ class PopUp {
 			}
 			pop_div.appendChild(this.defaultButton(params.defaultButton));
 			this.createPop(fragment, master_div);
-			pop_div.style.animation = zoomInDown;
+			//await this.wait(500);
+			await this.animateCSS();
 			await this.wait(300);
 			await this.clickEvent(master_div, pop_div);
 
@@ -135,6 +135,25 @@ class PopUp {
 		} catch (err) {
 			console.log("Error: " + err);
 		}
+	}
+
+
+	animateCSS (prefix = 'animate__') {
+		return new Promise((resolve, reject) => {
+			const animationName = "zoomInDown";
+			const node = this.getEId(this.div_id_pop);
+			console.log("node", node, this.div_id_pop);
+			node.classList.add(`${prefix}pop_up`, animationName);
+
+			function handleAnimationEnd(event) {
+				console.log("passed")
+				event.stopPropagation();
+				node.classList.remove(`${prefix}animated`, animationName);
+				resolve('Animation ended');
+			}
+
+			node.addEventListener('animationend', handleAnimationEnd, {twiced: true});
+		});
 	}
 
 	isObject(obj){
