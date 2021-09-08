@@ -12,7 +12,7 @@ class PopUp {
 		this.image_classname = "pop_image";
 		this.title_classname = "pop_title";
 		this.default_icone = "../assets/imgs/";
-		this.css_file = "../assets/css/pop-up2021.css";
+		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
 	}
 
 	injectCss(){
