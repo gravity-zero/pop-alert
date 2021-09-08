@@ -1,6 +1,8 @@
 class PopUp {
 	
 	constructor() {
+		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
+		this.CssInjectTest();
 		this.div_id_master = "pop_master_div";
 		this.div_id_pop = "pop_container";
 		this.open_anim_pop = "pop_container_open";
@@ -12,9 +14,6 @@ class PopUp {
 		this.image_classname = "pop_image";
 		this.title_classname = "pop_title";
 		this.default_icone = "../assets/imgs/";
-		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
-		this.injectCss();
-
 	}
 
 	injectCss(){
@@ -27,6 +26,18 @@ class PopUp {
 		link.media = "screen,print";
 
 		document.getElementsByTagName( "head" )[0].appendChild( link );
+	}
+
+	CssInjectTest(){
+		let links = document.getElementsByTagName( "link");
+		let inject = true;
+
+		if(links){
+				for(let i = 0; i < links.length; i++){
+					if(links[i].href === this.css_file) inject = false;
+				}
+		}
+			inject ? this.injectCss() : false;
 	}
 
 	getEId(ID){
@@ -187,7 +198,6 @@ class PopUp {
 	async params(params, icone=false, text=false, defaultButton=false) {
 		try {
 			if (params) {
-				this.wait(200);
 				let fragment = this.node_fragment();
 				const master_div = this.div(this.div_id_master);
 				const pop_div = this.div(this.div_id_pop, this.open_anim_pop);
