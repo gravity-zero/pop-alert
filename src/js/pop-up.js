@@ -32,7 +32,7 @@ class PopUp {
 	}
 
 	getClassName(className){
-		return document.getElementsByClassName(className)[0];
+		return document.getElementsByClassName(`${className}`)[0];
 	}
 
 	node_fragment() {
@@ -137,36 +137,45 @@ class PopUp {
 		}
 	}
 
-	async buttonEvnt(name, objectName){
-		try {
-			let button = this.getClassName(name)[0];
-		button.addEventListener("click", (e) => {
-			e.preventDefault();
-			response= new Response();
-			response.name = true;
-			console.log(response);
-			return response;
-		})
-		} catch (error) {
-			
+	async buttonEvnt(master_div, pop_div){
+		try{
+			let confirmButton = this.getClassName(this.pop_confirm_button);
+			let denyButton = this.getClassName(this.pop_deny_button);
+			return new Promise((resolve, reject) => {
+				confirmButton.addEventListener("click", (e) => {
+					e.preventDefault();
+					this.removePop(master_div, pop_div);
+					let response = new Object();
+					response.confirm = true;
+					response.denied = false;
+					resolve(response);
+				}, {once: true});
+				denyButton.addEventListener("click", (e) => {
+					e.preventDefault();
+					this.removePop(master_div, pop_div);
+					let response = new Object();
+					response.confirmation = false;
+					response.denied = true;
+					resolve(response);
+				}, {once: true});
+			})
+		}catch(error){
+			console.log(error);
 		}
 	}
 
-
-
-	async clickEvent(master_div, div) {
+	async clickEvent(master_div, pop_div) {
 		try{
 			document.body.addEventListener("click", async (evt) => {
 				let targetElement = evt.target; 
 				do {
-					if (targetElement == div) {
+					if (targetElement == pop_div) {
 						console.log("You clicked inside");
-						if(this.getClassName(this.pop_buttons))return this.buttonEvnt();
 						return 
 					}
 					targetElement = targetElement.parentNode;
 				} while (targetElement);
-				await this.removePop(master_div, div);
+				await this.removePop(master_div, pop_div);
 				return;
 			});
 		}catch(e){
@@ -176,7 +185,6 @@ class PopUp {
 
 	async params(params, icone=false, text=false, defaultButton=false) {
 		try {
-			//console.log(this.image_classname)
 			if (params) {
 				this.injectCss();
 				this.wait(200);
@@ -212,8 +220,7 @@ class PopUp {
 				this.createPop(fragment, master_div);
 				await this.wait(300);
 				await this.clickEvent(master_div, pop_div);
-
-				return;
+				return this.buttonEvnt(master_div, pop_div);
 			}
 		} catch (err) {
 			console.log("Error: " + err);

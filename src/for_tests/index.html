@@ -27,6 +27,12 @@
           img_weight: 157,
           img_height: 69,
           img_alt: 'logo ipssi',
+        }).then((result) => {
+          if(result.confirm){
+            //Do some stuff
+          }else if(result.denied){
+            //Do some stuff
+          }
         })
         /*Pop.params(
           "toto", "tata"

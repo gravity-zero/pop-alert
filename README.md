@@ -1,5 +1,6 @@
 # pop-alert
-
+Just in case you need custom javascript alert
+it's like sweet-alert : https://sweetalert2.github.io/
 # Exemple 
 ```javascript
 <script>  
@@ -17,6 +18,13 @@
     img_weight: 157,
     img_height: 69,
     img_alt: 'My logo',
+  })
+  .then((result) => {
+    if(result.confirm){
+      //Do some stuff
+    }else if(result.denied){
+      //Do some stuff
+    }
   });
 
 </script>
