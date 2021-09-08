@@ -2,7 +2,6 @@ class PopUp {
 	
 	constructor() {
 		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
-		this.CssInjectTest();
 		this.div_id_master = "pop_master_div";
 		this.div_id_pop = "pop_container";
 		this.open_anim_pop = "pop_container_open";
@@ -278,3 +277,5 @@ class PopUp {
 	}
 }
 
+const pop = new PopUp();
+pop.CssInjectTest();
