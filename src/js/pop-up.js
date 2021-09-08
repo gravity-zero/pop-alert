@@ -13,6 +13,8 @@ class PopUp {
 		this.title_classname = "pop_title";
 		this.default_icone = "../assets/imgs/";
 		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
+		this.injectCss();
+
 	}
 
 	injectCss(){
@@ -64,7 +66,6 @@ class PopUp {
 					break;
 			case 'error':
 					icone.className = "icone_error";
-
 					break;
 			case 'warning':
 					icone.className = "icone_warning";
@@ -170,7 +171,7 @@ class PopUp {
 				let targetElement = evt.target; 
 				do {
 					if (targetElement == pop_div) {
-						console.log("You clicked inside");
+						//console.log("You clicked inside");
 						return 
 					}
 					targetElement = targetElement.parentNode;
@@ -186,7 +187,6 @@ class PopUp {
 	async params(params, icone=false, text=false, defaultButton=false) {
 		try {
 			if (params) {
-				this.injectCss();
 				this.wait(200);
 				let fragment = this.node_fragment();
 				const master_div = this.div(this.div_id_master);
