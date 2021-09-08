@@ -22,7 +22,7 @@
   position: relative;
   z-index: 1012;
   padding: 10px;
-  min-width: 520px;
+  max-width: 520px;
   min-height: 320px;
   border:2px solid black;
   -moz-border-radius:7px;
