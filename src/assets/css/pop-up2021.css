@@ -21,7 +21,7 @@
   text-align: center;
   position: relative;
   z-index: 1012;
-  min-width: 470px;
+  max-width: 470px;
   min-height: 320px;
   border:2px solid black;
   -moz-border-radius:7px;
