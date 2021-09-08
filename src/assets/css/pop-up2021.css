@@ -1,18 +1,17 @@
 #pop_master_div{
-  padding: 0px;
-  margin: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  z-index: 1011;
+  min-width: 95vw;
+  min-height: 95vh;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  min-width: 95vw;
-  min-height: 95vh;
-  border: 2px solid orange;
-  position: absolute;
-  z-index: 998;
+  padding: 0px;
+  margin: 0px;
 }
 
 
@@ -21,18 +20,59 @@
   flex-direction: column;
   text-align: center;
   position: relative;
-  z-index: 999;
-  width: 470px;
-  height: 320px;
-  border: 2px solid red;
+  z-index: 1012;
+  min-width: 470px;
+  min-height: 320px;
+  border:2px solid black;
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  border-radius:7px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-  
-  box-sizing: border-box;
+}
+
+.pop_container_open{
   -webkit-animation: zoomInDown;
-          animation: zoomInDown;
-  /*animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-play-state: running;*/
+  animation: zoomInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-duration: var(1s);
+  animation-duration: var(1s);
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.pop_container_close{
+  -webkit-animation: fadeOutUp;
+  animation: fadeOutUp;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-duration: var(1s);
+  animation-duration: var(1s);
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.pop_image{
+  margin-bottom: 15px;
+  align-self: center;
+  margin: 15px;
+}
+
+#pop_buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.pop_valid_button{
+  width: 70px;
+  height: 35px;
+  margin-right: 20px;
+}
+
+.pop_deny_button{
+  width: 70px;
+  height: 35px;
 }
 
 
@@ -45,24 +85,10 @@ button:hover{
   height: 20px;
 }
 
-
-/* CREDIT FOR ANIMATE-CSS */
-/* https://animate.style/ */
-
-/*@keyframes repo {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 1;
-  }
-  30%{
-    transition-duration: 1s;
-    box-shadow: none;
-  }
-  100% {
-    transform: translateY(-1000px) translateX(-1000px);
-    opacity: 0;
-  }
-}*/
+/* Source of the Css Animation */
+/* Animate.css */
+/* link: https://animate.style/ */
+/* Github: https://github.com/animate-css/animate.css/blob/main/animate.css */
 
 @-webkit-keyframes zoomInDown {
   from {
@@ -100,4 +126,27 @@ button:hover{
   }
 }
 
-/* CREDIT END */
+@-webkit-keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+}
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* End Css Animation */

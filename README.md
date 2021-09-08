@@ -7,20 +7,17 @@
 
   //Your condition(s)
 
-
   Pop.params({
-          title: "This is my PopUp Title!",
-          text: "My cool PopUp Text",
-          confirmButton: true,  /*Default*/
-          denyButton: true, /*Optionnal*/
-          questButton: false, /*Optionnal*/
-          image_weigth: 50,
-          image_heigth: 40,
-          image_src: "http://yourimage.com",
-          image_alt: "A lion walking the street",
-
-        })
-
+    icon: 'validation',
+    title: "This is my PopUp Title!",
+    text: "My cool PopUp Text", // or html: <p>My cool PopUp Text</p>
+    showConfirmButton: true,
+    showDenyButton: true,
+    img_link: "http://yourimage.com",
+    img_weight: 157,
+    img_height: 69,
+    img_alt: 'My logo',
+  });
 
 </script>
 ```

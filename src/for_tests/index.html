@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <script src="../js/pop-up.js"></script>
-  <link rel="stylesheet" href="../assets/css/base.css">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test pop-up</title>
 </head>
 <body>
+
     <h1>Test</h1>
     <div style="width: 1000px; height:500px" class="">
       <button onclick="launch_pop()">Launch</button>
@@ -17,10 +18,15 @@
       function launch_pop(){
         const Pop = new PopUp();
         Pop.params({
-          title: "toto",
-          text: "tata toto",
-          icone: true,
-          
+          icon: 'validation',
+          title: "This is the title",
+          text: "Lorem Ipssuellum dolor sit amet, consectetur",
+          showConfirmButton: true,
+          showDenyButton: true,
+          img_link: 'https://www.ecole-ipssi.com/wp-content/uploads/2020/07/logo-footer-new.png',
+          img_weight: 157,
+          img_height: 69,
+          img_alt: 'logo ipssi',
         })
         /*Pop.params(
           "toto", "tata"
