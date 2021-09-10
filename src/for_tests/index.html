@@ -8,11 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test pop-up</title>
 </head>
-<body>
+<body style="text-align: center;">
 
     <h1>Test</h1>
-    <div style="width: 1000px; height:500px" class="">
-      <button onclick="launch_pop()">Launch</button>
+    <div style="width: 1000px; height:500px;" class="">
+      <button style="text-align: center;" onclick="launch_pop()">Launch</button>
     </div>
     <script type="text/javascript">
       function launch_pop(){
@@ -22,17 +22,20 @@
           title: "This is the title",
           text: "Lorem Ipssuellum dolor sit amet, consectetur",
           showConfirmButton: true,
-          showDenyButton: true,
+          showDenyButton: false,
           img_link: 'https://www.ecole-ipssi.com/wp-content/uploads/2020/07/logo-footer-new.png',
           img_weight: 157,
           img_height: 69,
           img_alt: 'logo ipssi',
         }).then((result) => {
-          if(result.confirm){
+          console.log(result)
+          /*if(result.confirm){
+            console.log("confirmé");
             //Do some stuff
           }else if(result.denied){
             //Do some stuff
-          }
+            console.log("refusé");
+          }*/
         })
         /*Pop.params(
           "toto", "tata"

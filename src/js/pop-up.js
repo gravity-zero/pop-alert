@@ -153,23 +153,27 @@ class PopUp {
 			let confirmButton = this.getClassName(this.pop_confirm_button);
 			let denyButton = this.getClassName(this.pop_deny_button);
 			return new Promise((resolve, reject) => {
-				confirmButton.addEventListener("click", (e) => {
-					e.preventDefault();
-					this.removePop(master_div, pop_div);
-					let response = new Object();
-					response.confirm = true;
-					response.denied = false;
-					resolve(response);
-				}, {once: true});
-				denyButton.addEventListener("click", (e) => {
-					e.preventDefault();
-					this.removePop(master_div, pop_div);
-					let response = new Object();
-					response.confirmation = false;
-					response.denied = true;
-					resolve(response);
-				}, {once: true});
-			})
+				if(confirmButton){
+					confirmButton.addEventListener("click", (e) => {
+						e.preventDefault();
+						this.removePop(master_div, pop_div);
+						let response = new Object();
+						response.confirm = true;
+						response.denied = false;
+						resolve(response);
+					}, {once: true});
+				}
+				if(denyButton){
+					denyButton.addEventListener("click", (e) => {
+						e.preventDefault();
+						this.removePop(master_div, pop_div);
+						let response = new Object();
+						response.confirmation = false;
+						response.denied = true;
+						resolve(response);
+					}, {once: true});
+				}
+			});	
 		}catch(error){
 			console.log(error);
 		}
@@ -181,7 +185,6 @@ class PopUp {
 				let targetElement = evt.target; 
 				do {
 					if (targetElement == pop_div) {
-						//console.log("You clicked inside");
 						return 
 					}
 					targetElement = targetElement.parentNode;
@@ -206,8 +209,10 @@ class PopUp {
 				if (this.isObject(params)) {
 					for (const PROP in params) {
 						if(PROP !== "img_weight" && PROP !== "img_height" && PROP !== "img_alt"){
-							if(PROP === "showConfirmButton" || PROP === "showDenyButton"){
-								buttons_div.appendChild(this[PROP](params[PROP]));
+							if((PROP === "showConfirmButton") || (PROP === "showDenyButton")){
+								if(params[PROP]){
+									buttons_div.appendChild(this[PROP](params[PROP]));
+								}
 							}else{
 								pop_div.appendChild(this[PROP](params[PROP]));
 							}
