@@ -20,10 +20,11 @@
   flex-direction: column;
   text-align: center;
   position: relative;
+  background-color: white;
   z-index: 1012;
   padding: 10px;
-  max-width: 520px;
-  min-height: 320px;
+  max-width: 1200px;
+  min-height: 800px;
   border:2px solid black;
   -moz-border-radius:7px;
   -webkit-border-radius:7px;

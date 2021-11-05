@@ -100,10 +100,17 @@ class PopUp {
 		return img;
 	}
 
+	height(height, pop_div){
+		pop_div.style.height = height ? height + "px" : '320px';
+	}
+
+	width(width, pop_div){
+		pop_div.style.width = width ? width + "px" : '520px';
+	}
+
 	img_weight(img_width, pop_div){
 		let img = pop_div.getElementsByClassName(this.image_classname)[0];
 		img.style.width = img_width ? img_width + "px" : '50px';
-		
 	}
 
 	img_height(img_height, pop_div){
@@ -124,7 +131,7 @@ class PopUp {
 	}
 
 	html(text) {
-		let message = document.createElement("p");
+		let message = document.createElement("div");
 		message.className = "pop_message";
 		message.innerHTML = text;
 		return message;
@@ -208,7 +215,7 @@ class PopUp {
 
 				if (this.isObject(params)) {
 					for (const PROP in params) {
-						if(PROP !== "img_weight" && PROP !== "img_height" && PROP !== "img_alt"){
+						if(PROP !== "img_weight" && PROP !== "img_height" && PROP !== "img_alt" && PROP !== "height" && PROP !== "width"){
 							if((PROP === "showConfirmButton") || (PROP === "showDenyButton")){
 								if(params[PROP]){
 									buttons_div.appendChild(this[PROP](params[PROP]));
@@ -232,7 +239,7 @@ class PopUp {
 				if(pop_div) pop_div.appendChild(buttons_div);
 	
 				this.createPop(fragment, master_div);
-				await this.wait(300);
+				await this.wait(300); // Delay before listening pop-up click (Loading time animation)
 				await this.clickEvent(master_div, pop_div);
 				return this.buttonEvnt(master_div, pop_div);
 			}

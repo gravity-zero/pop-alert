@@ -11,7 +11,7 @@
 <body style="text-align: center;">
 
     <h1>Test</h1>
-    <div style="width: 1000px; height:500px;" class="">
+    <div style="width: 1000px; height:500px;">
       <button style="text-align: center;" onclick="launch_pop()">Launch</button>
     </div>
     <script type="text/javascript">
@@ -22,10 +22,12 @@
           title: "This is the title",
           text: "Lorem Ipssuellum dolor sit amet, consectetur",
           showConfirmButton: true,
-          showDenyButton: false,
+          showDenyButton: true,
           img_link: 'https://www.ecole-ipssi.com/wp-content/uploads/2020/07/logo-footer-new.png',
           img_weight: 157,
           img_height: 69,
+            width: 200,
+            height: 100,
           img_alt: 'logo ipssi',
         }).then((result) => {
           console.log(result)
