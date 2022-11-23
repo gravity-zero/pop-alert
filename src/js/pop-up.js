@@ -1,8 +1,8 @@
 class PopUp {
 	
 	constructor() {
-		//this.css_file = "../assets/css/pop-up2021.css";
-		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
+		this.css_file = "../assets/css/pop-up2021.css";
+		//this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
 		this.div_id_master = "pop_master_div";
 		this.div_id_pop = "pop_container";
 		this.open_anim_pop = "pop_container_open";
@@ -197,11 +197,12 @@ class PopUp {
 					}
 					targetElement = targetElement.parentNode;
 				} while (targetElement);
-				await this.removePop(master_div, pop_div);
-				return;
+
+				if(!this.getClassName(this.pop_confirm_button) && !this.getClassName(this.pop_deny_button))
+					await this.removePop(master_div, pop_div);
 			});
 		}catch(e){
-			return;
+			console.log("error: \n", e);
 		}
 	}
 
@@ -232,8 +233,8 @@ class PopUp {
 					console.log("Error: params can't be an array");
 				} else {
 					const title = params;
-					let title_text = title ? this.text(title) : null;
-					let title_name = icone ? icone : this.icon('validation');
+					if(title) this.text(title);
+					if(!icone) this.icon('validation');
 					text ? this.text(text) : null;
 					defaultButton ? this.defaultButton(defaultButton) : this.showConfirmButton(true);
 				}
