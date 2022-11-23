@@ -25,6 +25,7 @@ class PopUp {
 							find=true 
 							console.clear();
 						})
+		.catch(err => { /*catch the error & do nothing*/ })
 		
 			if(find) return file;
 		return default_file;
