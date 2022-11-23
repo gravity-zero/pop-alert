@@ -23,8 +23,7 @@ class PopUp {
 		fetch(file_to_test)
 		.then(res => { if(res.status === 200)
 							find=true 
-							console.clear();
-						})
+					})
 		.catch(err => { /*catch the error & do nothing*/ })
 		
 			if(find) return file;
