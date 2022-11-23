@@ -22,9 +22,9 @@ class PopUp {
 		find=false;
 		fetch(file_to_test)
 		.then(res => { if(res.status === 200)
-							find=true 
+							find=true
 					})
-		.catch(err => { /*catch the error & do nothing*/ })
+		.catch(err => { const mute = err })
 		
 			if(find) return file;
 		return default_file;
