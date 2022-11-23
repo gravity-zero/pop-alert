@@ -10,9 +10,9 @@
 </head>
 <body style="text-align: center;">
 
-    <h1>Test</h1>
+    <h1>Launch Test</h1>
     <div style="width: 1000px; height:500px;">
-      <button style="text-align: center;" onclick="launch_pop()">Launch</button>
+      <button style="text-align: center; margin: auto; display: inline-block" onclick="launch_pop()">Start Test</button>
     </div>
     <script type="text/javascript">
       function launch_pop(){
@@ -23,24 +23,24 @@
           text: "Lorem Ipssuellum dolor sit amet, consectetur",
           showConfirmButton: true,
           showDenyButton: true,
-          width: 200,
-          height: 150,
           img_link: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/800px-Apple_logo_black.svg.png',
-          img_weight: 157,
-          img_height: 69,
-          width: 500,
-          height: 300,
+          img_weight: 150,
+          img_height: 150,
+          width: 600,
+          height: 400,
           img_alt: 'logo',
-        }).then((result) => {
-          console.log(result)
-          /*if(result.confirm){
+          timer: 5000
+          
+        }).then((res) => {
+          if(res){
+            if(res.confirmation){
             console.log("confirmé");
-            //Do some stuff
-          }else if(result.denied){
-            //Do some stuff
+            }else if(res.denied){
             console.log("refusé");
-          }*/
+            }
+          }
         })
+        
         /*Pop.params(
           "toto", "tata"
         )*/

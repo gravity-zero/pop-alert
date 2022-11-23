@@ -1,11 +1,9 @@
 class PopUp {
 	
 	constructor() {
-		
-
-		this.css_file = this.cssFileTest("../assets/css/pop-up2021.css", "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css");
+		this.css_file = "../assets/css/pop-up2021.css";
 		//this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
-		this.div_id_master = "pop_master_div";
+		this.id_master_div = "pop_master_div";
 		this.div_id_pop = "pop_container";
 		this.open_anim_pop = "pop_container_open";
 		this.close_anim_pop = "pop_container_close";
@@ -16,24 +14,26 @@ class PopUp {
 		this.image_classname = "pop_image";
 		this.title_classname = "pop_title";
 		this.default_icone = "../assets/imgs/";
+		this.css_params = ["img_weight", "img_height", "img_alt", "height", "width"];
 	}
 
-	cssFileTest(file_to_test, default_file){
+	/* cssFileTest(file_to_test, default_file){
 		find=false;
-		fetch(file_to_test)
-		.then(res => { if(res.status === 200)
-							find=true
-					})
-		.catch(err => { const mute = err })
-		
-			if(find) return file;
-		return default_file;
-	}
+		return new Promise((resolve, reject) => {
+			fetch(file_to_test)
+			.then(res => { if(res.status === 200)
+								find=true
+						})
+			
+				if(find) return file;
+			return default_file;
+		});
+	} */
 
 	injectCss(){
 		let file = this.css_file;
 		let link = document.createElement("link");
-		link.href = file.substr( 0, file.lastIndexOf( "." ) ) + ".css";
+		link.href = file.substring( 0, file.lastIndexOf( "." ) ) + ".css";
 		link.type = "text/css";
 		link.rel = "stylesheet";
 		link.value="nosniff";
@@ -42,7 +42,7 @@ class PopUp {
 		document.getElementsByTagName( "head" )[0].appendChild( link );
 	}
 
-	CssInjectTest(){
+	needInjectCss(){
 		let links = document.getElementsByTagName( "link");
 		let inject = true;
 
@@ -51,7 +51,7 @@ class PopUp {
 					if(links[i].href === this.css_file) inject = false;
 				}
 		}
-			inject ? this.injectCss() : false;
+			return inject ? this.injectCss() : false;
 	}
 
 	getEId(ID){
@@ -170,7 +170,12 @@ class PopUp {
 		}
 	}
 
-	async buttonEvnt(master_div, pop_div){
+	async timer(time, master_div) {
+		await this.wait(time);
+		return this.removePop(master_div);
+	}
+
+	async buttonEvnt(master_div){
 		try{
 			let confirmButton = this.getClassName(this.pop_confirm_button);
 			let denyButton = this.getClassName(this.pop_deny_button);
@@ -178,9 +183,9 @@ class PopUp {
 				if(confirmButton){
 					confirmButton.addEventListener("click", (e) => {
 						e.preventDefault();
-						this.removePop(master_div, pop_div);
+						this.removePop(master_div);
 						let response = new Object();
-						response.confirm = true;
+						response.confirmation = true;
 						response.denied = false;
 						resolve(response);
 					}, {once: true});
@@ -188,7 +193,7 @@ class PopUp {
 				if(denyButton){
 					denyButton.addEventListener("click", (e) => {
 						e.preventDefault();
-						this.removePop(master_div, pop_div);
+						this.removePop(master_div);
 						let response = new Object();
 						response.confirmation = false;
 						response.denied = true;
@@ -213,7 +218,7 @@ class PopUp {
 				} while (targetElement);
 
 				if(!this.getClassName(this.pop_confirm_button) && !this.getClassName(this.pop_deny_button))
-					await this.removePop(master_div, pop_div);
+					await this.removePop(master_div);
 			});
 		}catch(e){
 			console.log("error: \n", e);
@@ -224,40 +229,45 @@ class PopUp {
 		try {
 			if (params) {
 				let fragment = this.node_fragment();
-				const master_div = this.div(this.div_id_master);
+				const master_div = this.div(this.id_master_div);
 				const pop_div = this.div(this.div_id_pop, this.open_anim_pop);
 				const buttons_div = this.div(this.pop_buttons, null, 200, 100);
 				master_div.appendChild(pop_div);
 
+				if (Array.isArray(params)){
+					console.log("Error: params can't be an array");
+					return false;
+				}
+					
 				if (this.isObject(params)) {
 					for (const PROP in params) {
-						if(PROP !== "img_weight" && PROP !== "img_height" && PROP !== "img_alt" && PROP !== "height" && PROP !== "width"){
-							if((PROP === "showConfirmButton") || (PROP === "showDenyButton")){
-								if(params[PROP]){
-									buttons_div.appendChild(this[PROP](params[PROP]));
-								}
-							}else{
-								pop_div.appendChild(this[PROP](params[PROP]));
-							}
-						}else{
+						if(this.css_params.includes(PROP)){
 							this[PROP](params[PROP], pop_div)
+						}else if(["showConfirmButton", "showDenyButton"].includes(PROP)){
+							if(params[PROP])
+								buttons_div.appendChild(this[PROP](params[PROP]));
+						}else if(PROP === "timer"){
+							this[PROP](params[PROP], master_div);
+						}else{
+							pop_div.appendChild(this[PROP](params[PROP]));
 						}
 					}
-				} else if (Array.isArray(params)) {
-					console.log("Error: params can't be an array");
 				} else {
 					const title = params;
-					if(title) this.text(title);
+					if(title) this.title(title);
 					if(!icone) this.icon('validation');
 					text ? this.text(text) : null;
 					defaultButton ? this.defaultButton(defaultButton) : this.showConfirmButton(true);
 				}
-				if(pop_div) pop_div.appendChild(buttons_div);
-	
+				
+				pop_div.appendChild(buttons_div);
 				this.createPop(fragment, master_div);
 				await this.wait(300); // Delay before listening pop-up click (Loading time animation)
 				await this.clickEvent(master_div, pop_div);
-				return this.buttonEvnt(master_div, pop_div);
+
+				if(buttons_div.childElementCount > 0)
+					return this.buttonEvnt(master_div);
+
 			}
 		} catch (err) {
 			console.log("Error: " + err);
@@ -282,7 +292,7 @@ class PopUp {
 
 	async removePop(master_div) {
 		try{
-			let master_div_exist = document.getElementById("pop_master_div")
+			let master_div_exist = document.getElementById("pop_master_div");
 			if (master_div === master_div_exist) {
 				let pop_div = this.getEId(this.div_id_pop);
 				pop_div.className = this.close_anim_pop;
@@ -296,7 +306,8 @@ class PopUp {
 		return;
 	}
 
-	createPop(fragment, master_div) {
+	createPop(fragment, master_div) 
+	{
 		let master_div_exist = document.getElementById("pop_master_div");
 		if (!master_div_exist) {
 			const fragment_div = fragment.appendChild(master_div);
@@ -306,4 +317,4 @@ class PopUp {
 }
 
 const pop = new PopUp();
-pop.CssInjectTest();
+pop.needInjectCss();

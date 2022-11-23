@@ -22,6 +22,7 @@ If you want try it, here the CDN : https://cdn.pop-up.gravity-zero.fr/js/pop-up.
     img_weight: 157,
     img_height: 69,
     img_alt: 'My logo',
+    timer: 5000 // timer before close pop-up
   })
   .then((result) => {
     if(result.confirm){
