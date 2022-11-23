@@ -1,8 +1,10 @@
 class PopUp {
 	
 	constructor() {
-		this.css_file = "../assets/css/pop-up2021.css";
-		//this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
+		
+
+		//this.css_file = this.cssFileTest("../assets/css/pop-up2021.css", "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css");
+		this.css_file = "https://cdn.pop-up.gravity-zero.fr/assets/css/pop-up2021.css";
 		this.div_id_master = "pop_master_div";
 		this.div_id_pop = "pop_container";
 		this.open_anim_pop = "pop_container_open";
@@ -14,6 +16,13 @@ class PopUp {
 		this.image_classname = "pop_image";
 		this.title_classname = "pop_title";
 		this.default_icone = "../assets/imgs/";
+	}
+
+	cssFileTest(file_to_test, default_file){
+		find=false;
+		fetch('file_to_test').then(res => {if(res.statush === 200) find=true})
+			if(find) return file;
+		return default_file;
 	}
 
 	injectCss(){
