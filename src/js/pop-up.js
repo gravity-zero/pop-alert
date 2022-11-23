@@ -20,7 +20,7 @@ class PopUp {
 
 	cssFileTest(file_to_test, default_file){
 		find=false;
-		fetch('file_to_test').then(res => {if(res.statush === 200) find=true})
+		fetch(file_to_test).then(res => {if(res.statush === 200) find=true})
 			if(find) return file;
 		return default_file;
 	}
