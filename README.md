@@ -25,7 +25,7 @@ If you want try it, here the CDN : https://cdn.pop-up.gravity-zero.fr/js/pop-up.
     timer: 5000 // timer before close pop-up
   })
   .then((result) => {
-    if(result.confirm){
+    if(result.confirmation){
       //Do some stuff
     }else if(result.denied){
       //Do some stuff
